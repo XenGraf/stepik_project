@@ -24,11 +24,20 @@ class BasePage():
     def go_to_login_page(self):
         link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         link.click()
+                
+    def go_to_basket_page(self):
+        link = self.browser.find_element(*BasePageLocators.BASKET_BTN)
+        link.click()
 
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+        
+    def should_be_empty_basket(self):
+        input = self.browser.find_element(*BasePageLocators.EMPTY_BASKET)
+        input_text = input.text
+        a = input_text.find("£0.00")
+        assert a > 0 , f"Basket is not empty, got {input_text}"
     
-
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
@@ -60,7 +69,6 @@ class BasePage():
             WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return True
-
         return False
     
     def is_disappeared(self, how, what, timeout=4):

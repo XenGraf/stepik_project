@@ -1,5 +1,6 @@
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
+from .pages.basket_page import BasketPage
 import time
 import pytest
 from selenium import webdriver
@@ -92,3 +93,25 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page.go_to_login_page()
     login_page = LoginPage(browser, browser.current_url)
     login_page.should_be_login_page()
+
+def test_guest_can_go_to_basket_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_be_empty_basket()
+    page.go_to_basket_page()
+
+def test_guest_can_see_empty_basket_message(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_be_empty_basket()
+    page.go_to_basket_page()
+    basket_page = BasketPage(browser, browser.current_url)
+    basket_page.should_be_text_about_empty_basket()
+    
+def test_should_not_be_any_product(browser):
+    link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_be_empty_basket()
