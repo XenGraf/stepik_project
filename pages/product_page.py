@@ -22,7 +22,7 @@ class ProductPage(BasePage):
         input1_text = input1.text
         input2 = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME_IN_BASKET)
         input2_text = input2.text
-        assert input2_text == input1_text, f"Wrong product name in basket, got {input2_text} instead of {input1_text} "
+        assert input2_text == input1_text, f"Wrong product name in basket, got {input2_text} instead of {input1_text}, {self.browser.current_url}"
         
     def should_match_product_prices(self):
         input1 = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE)
